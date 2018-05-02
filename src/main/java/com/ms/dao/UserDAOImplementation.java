@@ -15,6 +15,7 @@ public class UserDAOImplementation implements UserDAO {
 
     private static final Logger logger = LogManager.getLogger(UserDAOImplementation.class);
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -26,14 +27,14 @@ public class UserDAOImplementation implements UserDAO {
     public void addUser(FitGymUser fitGymUser) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(fitGymUser);
-        logger.info("Utworzono użytkownika" + fitGymUser.getUserName());
+        logger.info("Utworzono użytkownika" + fitGymUser.getUseremail());
     }
 
     @Override
     public void updateUser(FitGymUser fitGymUser) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(fitGymUser);
-        logger.info("Zaktualizowano użytkownika" + fitGymUser.getUserName());
+        logger.info("Zaktualizowano użytkownika" + fitGymUser.getUserimie());
     }
 
     @SuppressWarnings("unchecked")

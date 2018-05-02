@@ -16,6 +16,12 @@
 
 ####Versions:
 ####Current:
+0.03 
+
+Some code improvements
+
+
+#####Old:
 0.02 
 
 Added:
@@ -24,10 +30,8 @@ Added:
  - basic in memory authentication (termporaily)
  - logger 
  - Thymeleaf fragments code
-
-
-#####Old:
-
+ 
+ 
 0.01 
 
 Project initialization. Added some code.
