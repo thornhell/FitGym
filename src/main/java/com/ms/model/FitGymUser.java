@@ -2,11 +2,13 @@ package com.ms.model;
 
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "fitgymusers", schema = "public")
+@Table(name = "fitgymuser", schema = "public")
 public class FitGymUser {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
@@ -15,21 +17,34 @@ public class FitGymUser {
     private String userimie;
     @Column(name = "usernazwisko")
     private String usernazwisko;
+    @Column(name = "useremail")
+    private String useremail;
+    @Column(name = "fitgymid")
+    private String fitgymid;
+    @Column(name = "adres")
+    private String adres;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userroleid")
+    private FitGymUserRole fitGymUserRole;
 
     public FitGymUser() {
     }
 
-    @Column(name = "useremail")
-
-    private String useremail;
-    @Column(name = "usernumerkarty")
-    private String usernumerkarty;
-
-    public FitGymUser(String userimie, String usernazwisko, String useremail, String usernumerkarty) {
+    public FitGymUser(String userimie, String usernazwisko, String useremail, String fitgymid, String adres) {
         this.userimie = userimie;
         this.usernazwisko = usernazwisko;
         this.useremail = useremail;
-        this.usernumerkarty = usernumerkarty;
+        this.fitgymid = fitgymid;
+        this.adres = adres;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
     }
 
     public long getUserId() {
@@ -64,11 +79,19 @@ public class FitGymUser {
         this.useremail = useremail;
     }
 
-    public String getUsernumerkarty() {
-        return usernumerkarty;
+    public String getFitgymid() {
+        return fitgymid;
     }
 
-    public void setUsernumerkarty(String usernumerkarty) {
-        this.usernumerkarty = usernumerkarty;
+    public void setFitgymid(String fitgymid) {
+        this.fitgymid = fitgymid;
+    }
+
+    public FitGymUserRole getFitGymUserRole() {
+        return fitGymUserRole;
+    }
+
+    public void setFitGymUserRole(FitGymUserRole fitGymUserRole) {
+        this.fitGymUserRole = fitGymUserRole;
     }
 }

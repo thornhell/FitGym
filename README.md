@@ -16,12 +16,17 @@
 
 ####Versions:
 ####Current:
+0.04 
+
+Rebuild existing and created new entities with relations for fitgymuser, fitgymuserrole.
+
+#####Old:
+
 0.03 
 
 Some code improvements
 
 
-#####Old:
 0.02 
 
 Added:
