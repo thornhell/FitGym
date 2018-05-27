@@ -1,15 +1,24 @@
 package com.ms.controller;
 
+import com.ms.service.UserServiceImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    UserServiceImplementation userServiceImplementation;
 
     Logger logger = LogManager.getLogger(IndexController.class);
 
@@ -19,15 +28,14 @@ public class IndexController {
     private static final String ABOUT = "onas";
     private static final String GALLERY = "galeria";
     private static final String CONTACT = "kontakt";
-    private static final String LOGIN = "login";
 
-    @Autowired
-    private SessionFactory sessionFactory;
 
-    //Podstawowe
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("frag", INITIAL);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object name = authentication;
+        logger.debug("Zalogowany user: " + name + ", do index");
         return "index";
     }
 
@@ -61,15 +69,4 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "/login")
-    public String login(Model model) {
-        model.addAttribute("frag", LOGIN);
-        return "index";
-    }
-
-    @RequestMapping(value = "/userpage")
-    public String userpage() {
-        logger.debug("Otworzono stronę użytkownika");
-        return "userpage";
-    }
 }

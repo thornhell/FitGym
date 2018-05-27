@@ -12,13 +12,11 @@ public class FitGymUserRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userroleid")
     private long userroleid;
+    @Column(name = "rolename")
+    private String rolename;
 
     @OneToMany(mappedBy = "fitGymUserRole", fetch = FetchType.LAZY)
     Set<FitGymUser> fitGymUsers = new HashSet<>();
-
-
-    @Column(name = "rolename")
-    private String rolename;
 
     public FitGymUserRole(String rolename) {
         this.rolename = rolename;
@@ -51,6 +49,4 @@ public class FitGymUserRole {
     public void setRolename(String rolename) {
         this.rolename = rolename;
     }
-
-
 }

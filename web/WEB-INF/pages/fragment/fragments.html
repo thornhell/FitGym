@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="header">
-    <meta charset="UTF-8"></meta>
-    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet"></link>
-    <link th:href="@{/resources/css/fullimg.css}" rel="stylesheet"></link>
+    <meta charset="UTF-8"/>
+    <link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/resources/css/fullimg.css}" rel="stylesheet"/>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <title>FitGym</title>
 </head>
 <body>
 <div class="bar" th:fragment="navbar">
-    <!--<div container text-center>-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <b>Fit Gym</b>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -35,17 +36,109 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/kontakt">Kontakt</a>
                 </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="nav-link" href="/admin/adminpage">Strona administratora</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_MANAGEMENT')">
+                    <a class="nav-link" href="/management/managementpage">Strona menedżera</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_STAFF')">
+                    <a class="nav-link" href="/staff/staffpage">Strona obsługi</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                    <a class="nav-link" href="/instructor/instructorpage">Strona instruktora</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_MEMBER')">
+                    <a class="nav-link" href="/member/memberpage">Strona członka klubu</a>
+                </li>
             </ul>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" sec:authorize="hasRole('ROLE_ANONYMOUS')">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Zaloguj</a>
                 </li>
             </ul>
         </div>
+        <div class="collapse navbar-collapse"
+             sec:authorize="hasAnyRole( 'ROLE_ADMIN','ROLE_MANAGEMENT','ROLE_STAFF','ROLE_INSTRUCTOR','ROLE_MEMBER')">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout" th:text="'Wyloguj: '+${nazwaUzytkownika}"></a>
+                </li>
+            </ul>
+        </div>
     </nav>
 </div>
+<div th:fragment="userpage">
+    <div th:replace="fragment/fragments :: navbar"></div>
+    <div class="customrow">
+        <div class="row">
+            <div class="col-md-4">
+                <div th:replace="fragment/fragments :: userpanel"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="kolorek">
+                    <div class="container"><h1 th:text="${nazwaUzytkownika}"></h1></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="nav-side-menu" th:fragment="userpanel">
+    <div class="brand">
+        <div class="ratio img-responsive img-circle"
+             style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
+    </div>
+
+
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
+
+    <div class="menu-list">
+
+        <ul id="menu-content" class="menu-content collapse out">
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard fa-lg"></i> Jan Kowalski
+                </a>
+            </li>
+
+            <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                <a href="#"><i class="fa fa-gift fa-lg"></i> Rezerwacja zajęć dodatkowych <span
+                        class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="products">
+                <li><a href="#">Basen</a></li>
+                <li><a href="#">Masaż</a></li>
+                <li><a href="#">Trening indywidualny</a></li>
+
+            </ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-user fa-lg"></i> Historia treningów
+                </a>
+            </li>
+            <li data-toggle="collapse" data-target="#service" class="collapsed">
+                <a href="#"><i class="fa fa-globe fa-lg"></i> Historia płatności <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="service">
+                <li>New Service 1</li>
+                <li>New Service 2</li>
+                <li>New Service 3</li>
+            </ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-users fa-lg"></i> Moje dane
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+
 <div class="container d-flex h-50" th:fragment="initial">
     <div class="row align-self-center w-100">
         <div class="col-4 ml-auto">
@@ -98,11 +191,13 @@
 <div class="container d-flex h-75" th:fragment="login">
     <div class="row align-self-center w-100">
         <div class="col-4 mx-auto">
-            <form class="form-signin" action="#" th:action="@{/userpage}" method="post">
-                <input type="text" id="inputText" class="form-control" placeholder="Wpisz numer karty klubowej"
+            <form class="form-signin" th:action="@{/login}" method="post">
+                <input type="text" id="username" name="username" class="form-control"
+                       placeholder="Wpisz numer karty klubowej"
                        required
                        autofocus/>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Wpisz hasło" required/>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Wpisz hasło"
+                       required/>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Zaloguj</button>
             </form>
         </div>

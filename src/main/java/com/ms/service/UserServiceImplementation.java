@@ -4,20 +4,22 @@ import com.ms.model.FitGymUser;
 import com.ms.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImplementation implements UserService {
 
     @Autowired
-    private UserDAO UserDAO;
+    private UserDAO userDAO;
 
-    public void setUserDAO(UserDAO UserDAO) {
-        this.UserDAO = UserDAO;
+    public List<FitGymUser> getUserDetails() {
+        return userDAO.getUserDetails();
     }
 
-    @Override
-    public void addUser(FitGymUser fitGymUser) {
-        this.UserDAO.addUser(fitGymUser);
-
+    public FitGymUser findUserByFirgymid(String fitgymid){
+        return userDAO.findUserByFirgymid(fitgymid);
     }
 }

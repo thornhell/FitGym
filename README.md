@@ -1,11 +1,11 @@
-#Fit Gym
+# Fit Gym
 
 
-###Fit Gym is online fitness club management application based on Java and other web technologies
+### Fit Gym is online fitness club management application based on Java and other web technologies
 
 ####
 ![FitGym](screenshots/fitgym0_02.png)
-####Technologies:
+#### Technologies:
 
 * Spring MVC
 * Hibernate
@@ -14,20 +14,32 @@
 * Log4j2
 
 
-####Versions:
-####Current:
-0.04 
+
+#### Versions:
+#### Current:
+
+#### ver 0.1
+
+Added:
+- security improvements with database authentication
+- custom login page
+- custom 403 and 404 pages
+- thymeleaf fragments 
+- custom page for all types of users
+- custom top menu depends on current user role
+
+
+##### Old: 
+##### ver 0.04 
 
 Rebuild existing and created new entities with relations for fitgymuser, fitgymuserrole.
 
-#####Old:
-
-0.03 
+##### ver 0.03 
 
 Some code improvements
 
 
-0.02 
+##### ver 0.02 
 
 Added:
  - some initial html pages
@@ -37,6 +49,6 @@ Added:
  - Thymeleaf fragments code
  
  
-0.01 
+##### ver 0.01 
 
 Project initialization. Added some code.

@@ -21,9 +21,12 @@ public class FitGymUser {
     private String useremail;
     @Column(name = "fitgymid")
     private String fitgymid;
+    @Column(name = "password")
+    private String password;
     @Column(name = "adres")
     private String adres;
-
+    @Column(name = "enabled")
+    private Boolean enabled;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "userroleid")
     private FitGymUserRole fitGymUserRole;
@@ -31,12 +34,38 @@ public class FitGymUser {
     public FitGymUser() {
     }
 
-    public FitGymUser(String userimie, String usernazwisko, String useremail, String fitgymid, String adres) {
+    public FitGymUser(String userimie, String usernazwisko, String useremail, String fitgymid, String password, String adres, Boolean enabled) {
         this.userimie = userimie;
         this.usernazwisko = usernazwisko;
         this.useremail = useremail;
         this.fitgymid = fitgymid;
+        this.password = password;
         this.adres = adres;
+        this.enabled = enabled;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPass() {
+        return password;
+    }
+
+    public void setPass(String pass) {
+        this.password = password;
     }
 
     public String getAdres() {
@@ -93,5 +122,19 @@ public class FitGymUser {
 
     public void setFitGymUserRole(FitGymUserRole fitGymUserRole) {
         this.fitGymUserRole = fitGymUserRole;
+    }
+
+    @Override
+    public String toString() {
+        return "FitGymUser\n{" +
+                " \nuserid=" + userid +
+                ", \nuserimie='" + userimie + '\'' +
+                ", \nusernazwisko='" + usernazwisko + '\'' +
+                ", \nuseremail='" + useremail + '\'' +
+                ", \nfitgymid='" + fitgymid + '\'' +
+                ", \npassword='" + password + '\'' +
+                ", \nadres='" + adres + '\'' +
+                ", \nenabled=" + enabled +
+                "\n}";
     }
 }
