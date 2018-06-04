@@ -18,6 +18,12 @@
 #### Versions:
 #### Current:
 
+#### ver 0.11
+
+Some code improvements.
+
+
+##### Old: 
 #### ver 0.1
 
 Added:
@@ -29,7 +35,6 @@ Added:
 - custom top menu depends on current user role
 
 
-##### Old: 
 ##### ver 0.04 
 
 Rebuild existing and created new entities with relations for fitgymuser, fitgymuserrole.

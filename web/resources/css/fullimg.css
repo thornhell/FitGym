@@ -160,14 +160,12 @@
      padding: 0px;
  }
 
-
  .caption div {
      box-shadow: 0 0 5px #C8C8C8;
      transition: all 0.3s ease 0s;
  }
- /*.img-circle {*/
- /*border-radius: 70%;*/
- /*}*/
+
+
  .img-circle {
      border-radius: 0;
  }
@@ -196,5 +194,5 @@
  }
 
  .kolorek {
-     background: yellow;
+     background: #a8bac1;
  }

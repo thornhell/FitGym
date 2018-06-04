@@ -12,8 +12,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws
-            IOException,
-            ServletException {
+            IOException {
         response.sendRedirect("/error403");
     }
 }

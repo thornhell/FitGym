@@ -1,10 +1,7 @@
 package com.ms.controller;
 
-import com.ms.service.UserServiceImplementation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,12 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
-
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    UserServiceImplementation userServiceImplementation;
 
     Logger logger = LogManager.getLogger(IndexController.class);
 
