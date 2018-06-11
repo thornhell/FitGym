@@ -104,7 +104,7 @@
                 <li>Item 3</li>
             </ul>
             <li>
-                <a href="/admin/adminpage">
+                <a href="/member/memberpage">
                     <i class="fa fa-users fa-lg"></i> Moje dane
                 </a>
             </li>
@@ -274,29 +274,25 @@
             <div class="col-md-8">
                 <div sec:authorize="hasRole('ROLE_ADMIN')" th:replace="fragment/fragments :: adminarea"></div>
                 <div class="container" th:fragment="userarea">
-                    <div class="container kolorek"><h6 th:text="'Aktualnie zalogowany administrator: '+${nazwaUzytkownika}"></h6></div>
+                    <div class="container kolorek"><h6 th:text="'Aktualnie zalogowany użytkownik: '+${nazwaUzytkownika}"></h6></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!--####### AREA #######-->
+<!--####### AREA DETAIL #######-->
 <div class="container" th:fragment="adminarea">
     <div class="container kolorek">
         <h1>Panel administracyjny Fitgym</h1>
         <hr/>
-        <h1>Status serwera: OK</h1>
-        <h1>&nbsp;</h1>
-        <h3 th:if="${uptime != null}" th:text="'Uptime systemu: '+${uptimedate}"></h3>
-        <h3 th:if="${nowdate != null}" th:text="'Aktualna data: '+${nowdate}"></h3>
-        <h1>&nbsp;</h1>
-        <h3 th:if="${listauzytkownikow != null}"
-            th:text="'Lista: '+${listauzytkownikow}"></h3>
-        <h3 th:if="${zarzadzaniebaza != null}"
-            th:text="'Zarzadzanie: '+${zarzadzaniebaza}"></h3>
+        <div th:if="${adminareaPanel == true}" th:insert="fragment/fragments :: adminareapanel"></div>
+        <div th:if="${adminareaUsers == true}" th:insert="fragment/fragments :: adminareausers"></div>
+        <div th:if="${adminareaDb == true}" th:insert="fragment/fragments :: adminareadb"></div>
     </div>
 </div>
+
+
 
 <div class="container" th:fragment="managerarea">
     <div class="container kolorek"><h1 th:if="${uptime != null}" th:text="'Uptime: '+${uptime}"></h1></div>
@@ -312,6 +308,56 @@
     <div class="container kolorek"><h1 th:text="${nazwaUzytkownika}"></h1></div>
 </div>
 
+
+
+<!--####### AREA TASKS #######-->
+<!-- ADMIN -->
+<div class="container" th:fragment="adminareapanel">
+    <h1>Status serwera: OK</h1>
+    <h1>&nbsp;</h1>
+    <h1 th:text="'XXX to:'+${xxx}"></h1>
+    <h1>&nbsp;</h1>
+
+    <h3 th:if="${uptime != null}" th:text="'Uptime systemu: '+${uptimedate}"></h3>
+    <h3 th:if="${nowdate != null}" th:text="'Aktualna data: '+${nowdate}"></h3>
+    <h1>&nbsp;</h1>
+</div>
+
+<div class="container" th:fragment="adminareausers">
+    <h3>Liczba użytkowników Fitgym</h3>
+    <h4 th:text="${liczbaUzytkownikowFirgym}"></h4>
+    <h3>&nbsp;</h3>
+
+    <h3>Lista użytkowników</h3>
+    <a href="/none">Lista użytkowników</a>
+    <h3>&nbsp;</h3>
+
+    <h3>Dodaj uzytkownika</h3>
+    <a href="/none">Dodaj uzytkownika</a>
+    <h3>&nbsp;</h3>
+
+    <h3>Usuń uzytkownika</h3>
+    <a href="/none">Usuń uzytkownika</a>
+    <h3>&nbsp;</h3>
+
+    <h3>Zarządzanie rolami uzytkownika</h3>
+    <a href="/none">Zarządzanie rolami uzytkownika</a>
+    <h3>&nbsp;</h3>
+</div>
+
+<div class="container" th:fragment="adminareadb">
+    <h3>Informacje o bazie danych</h3>
+    <a href="/none">Informacje o bazie danych</a>
+    <h3>&nbsp;</h3>
+
+    <h3>Status bazy danych</h3>
+    <a href="/none">Status bazy danych</a>
+    <h3>&nbsp;</h3>
+
+    <h3>DB Dump</h3>
+    <a href="/none">DB Dump</a>
+    <h3>&nbsp;</h3>
+</div>
 
 <div class="container d-flex h-50" th:fragment="initial">
     <div class="row align-self-center w-100">
