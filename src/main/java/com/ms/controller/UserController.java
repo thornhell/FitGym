@@ -21,6 +21,9 @@ import java.util.TimeZone;
 @Controller
 public class UserController {
 
+    @Autowired
+    UserService userService;
+
     private Boolean adminareaPanel = false;
     private Boolean adminareaUsers = false;
     private Boolean adminareaDb = false;
@@ -51,6 +54,7 @@ public class UserController {
         model.addAttribute("uptimedate", uptimedate);
         model.addAttribute("nowdate", nowdate);
         model.addAttribute("adminareaPanel", adminareaPanel);
+        model.addAttribute("liczbaUzytkownikowFitgym", userService.allUserCount());
 
         logger.debug("Sukcesywnie zalogowano : " + name);
         return "/admin/adminpage";
@@ -61,9 +65,13 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         adminareaUsers = true;
+
         model.addAttribute("nazwaUzytkownika", name);
         model.addAttribute("adminareaUsers", adminareaUsers);
-
+        model.addAttribute("osoba", userService.findByFitgymid(name));
+        model.addAttribute("liczbaUzytkownikowFitgym", userService.allUserCount());
+        model.addAttribute("liczbaAktywnychUzytkownikowFitgym", userService.allActiveUserCount());
+        model.addAttribute("wszyscy", userService.allUsers());
         logger.debug("Otworzono /admin/adminpage/userlist");
         return "/admin/adminpage/userlist";
     }

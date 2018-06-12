@@ -274,7 +274,8 @@
             <div class="col-md-8">
                 <div sec:authorize="hasRole('ROLE_ADMIN')" th:replace="fragment/fragments :: adminarea"></div>
                 <div class="container" th:fragment="userarea">
-                    <div class="container kolorek"><h6 th:text="'Aktualnie zalogowany użytkownik: '+${nazwaUzytkownika}"></h6></div>
+                    <div class="container kolorek"><h6
+                            th:text="'Aktualnie zalogowany użytkownik: '+${nazwaUzytkownika}"></h6></div>
                 </div>
             </div>
         </div>
@@ -293,7 +294,6 @@
 </div>
 
 
-
 <div class="container" th:fragment="managerarea">
     <div class="container kolorek"><h1 th:if="${uptime != null}" th:text="'Uptime: '+${uptime}"></h1></div>
     <div class="container kolorek"><h1 th:if="${dateformatted != null}" th:text="'Date: '+${dateformatted}"></h1>
@@ -309,13 +309,12 @@
 </div>
 
 
-
 <!--####### AREA TASKS #######-->
 <!-- ADMIN -->
 <div class="container" th:fragment="adminareapanel">
     <h1>Status serwera: OK</h1>
     <h1>&nbsp;</h1>
-    <h1 th:text="'XXX to:'+${xxx}"></h1>
+    <h1 th:text="'Liczba userów to:'+${liczbaUzytkownikowFitgym}"></h1>
     <h1>&nbsp;</h1>
 
     <h3 th:if="${uptime != null}" th:text="'Uptime systemu: '+${uptimedate}"></h3>
@@ -325,11 +324,31 @@
 
 <div class="container" th:fragment="adminareausers">
     <h3>Liczba użytkowników Fitgym</h3>
-    <h4 th:text="${liczbaUzytkownikowFirgym}"></h4>
+    <h4 th:text="${liczbaUzytkownikowFitgym}"></h4>
     <h3>&nbsp;</h3>
-
+    <h3>Liczba aktywnych użytkowników Fitgym</h3>
+    <h4 th:text="${liczbaAktywnychUzytkownikowFitgym}"></h4>
+    <h3>&nbsp;</h3>
     <h3>Lista użytkowników</h3>
     <a href="/none">Lista użytkowników</a>
+    <table>
+        <tr>
+            <td><b>Imię</b></td>
+            <td><b>Nazwisko</b></td>
+            <td><b>Email</b></td>
+            <td><b>Fitgymid</b></td>
+            <td><b>Adres</b></td>
+
+        </tr>
+        <tr th:each="osoba : ${wszyscy}">
+            <td th:text="${osoba.userimie}"></td>
+            <td th:text="${osoba.usernazwisko}"></td>
+            <td th:text="${osoba.useremail}"></td>
+            <td th:text="${osoba.fitgymid}"></td>
+            <td th:text="${osoba.adres}"></td>
+        </tr>
+    </table>
+    <!--<h4 th:text="${wszyscy}"></h4>-->
     <h3>&nbsp;</h3>
 
     <h3>Dodaj uzytkownika</h3>

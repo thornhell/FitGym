@@ -18,12 +18,18 @@
 #### Versions:
 #### Current:
 
+#### ver 0.13
+
+Added some content for user management on admin page.
+
+
+#### Old: 
+
 #### ver 0.12
 
 Added some content for admin page.
 Added some code improvements.
 
-#### Old: 
 
 #### ver 0.11
 
