@@ -18,12 +18,19 @@
 #### Versions:
 #### Current:
 
+#### ver 0.15
+
+Added simple user add form.
+Thymeleaf menu was rebuilt according to better synergy with Spring Security
+
+
+#### Old: 
+
+
 #### ver 0.13
 
 Added some content for user management on admin page.
 
-
-#### Old: 
 
 #### ver 0.12
 

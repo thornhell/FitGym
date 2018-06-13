@@ -1,5 +1,6 @@
 package com.ms.controller;
 
+import com.ms.model.FitGymUser;
 import com.ms.repository.UserRepository;
 import com.ms.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
@@ -26,6 +31,7 @@ public class UserController {
 
     private Boolean adminareaPanel = false;
     private Boolean adminareaUsers = false;
+    private Boolean adminareaUsersAdd = false;
     private Boolean adminareaDb = false;
 
     Logger logger = LogManager.getLogger(IndexController.class);
@@ -76,14 +82,39 @@ public class UserController {
         return "/admin/adminpage/userlist";
     }
 
+    @RequestMapping(value = "/admin/adminpage/useradd")
+    public String adminpageUseradd(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        adminareaUsersAdd = true;
+        model.addAttribute("nazwaUzytkownika", name);
+        model.addAttribute("adminareaUsersAdd", adminareaUsersAdd);
+        model.addAttribute("fitgymuser", new FitGymUser());
+        System.out.println("dziala");
+        logger.debug("Otworzono /admin/adminpage/useradd");
+        return "/admin/adminpage/useradd";
+    }
+
+    @RequestMapping(value = "/admin/adminpage/useraddaction", method = RequestMethod.POST)
+    public String useraddaction(@ModelAttribute FitGymUser fitgymuser, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "/error/404";
+        }
+         userService.persist(fitgymuser);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++");
+        return "/admin/adminpage";
+    }
 
     @RequestMapping(value = "/admin/adminpage/dbadmin")
     public String adminpageDbadmin(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
+
+
         adminareaDb = true;
         model.addAttribute("nazwaUzytkownika", name);
         model.addAttribute("adminareaDb", adminareaDb);
+
 
         logger.debug("Otworzono /admin/adminpage/dbadmin");
         return "/admin/adminpage/dbadmin";
@@ -99,7 +130,6 @@ public class UserController {
         logger.debug("Sukcesywnie zalogowano menedzera: " + name);
         return "/management/managementpage";
     }
-
 
     @RequestMapping(value = "/staff/staffpage")
     public String staffpage(Model model) {

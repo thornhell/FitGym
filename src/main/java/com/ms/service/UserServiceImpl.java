@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.allUsers();
     }
 
+    @Override
+    public void persist(FitGymUser fitGymUser) {
+        userRepository.persist(fitGymUser);
+    }
+
 }

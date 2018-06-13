@@ -11,5 +11,5 @@ public interface UserRepository  {
     long allActiveUserCount();
     FitGymUser findByFitgymid(String name);
     List<FitGymUser> allUsers();
-
+    void persist(FitGymUser fitGymUser);
 }

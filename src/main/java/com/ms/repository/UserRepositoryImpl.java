@@ -40,4 +40,9 @@ public class UserRepositoryImpl implements UserRepository {
         return sessionFactory.getCurrentSession().createQuery("from FitGymUser").list();
 
     }
+
+    @Override
+    public void persist(FitGymUser fitGymUser) {
+        sessionFactory.getCurrentSession().persist(fitGymUser);
+    }
 }

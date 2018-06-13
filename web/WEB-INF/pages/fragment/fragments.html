@@ -9,6 +9,27 @@
     <title>FitGym</title>
 </head>
 <body>
+
+<!--####### CONTENT #######-->
+<div th:fragment="userpage">
+    <div th:replace="fragment/fragments :: navbar"></div>
+    <div class="customrow">
+        <div class="row">
+            <div class="col-md-4">
+                <div th:replace="fragment/fragments :: allmenu"></div>
+            </div>
+            <div class="col-md-8">
+                <div th:replace="fragment/fragments :: allpanel"></div>
+                <div class="container" th:fragment="userarea">
+                    <div class="container kolorek"><h6
+                            th:text="'Aktualnie zalogowany użytkownik: '+${nazwaUzytkownika}"></h6></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--####### NAVBAR #######-->
 <div class="bar" th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <b>Fit Gym</b>
@@ -72,55 +93,36 @@
 </div>
 
 
-<!--####### PANELE #######-->
-<div class="nav-side-menu" th:fragment="adminpanel">
+<!--####### MENU #######-->
+<div class="nav-side-menu" th:fragment="allmenu">
     <div class="brand">
         <div class="ratio img-responsive img-circle"
              style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
     </div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
+    <!--<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>-->
 
     <div class="menu-list">
-        <ul id="menu-content" class="menu-content collapse out">
+        <ul sec:authorize="hasRole('ROLE_ADMIN')" id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/admin/adminpage">
                     <i class="fa fa-dashboard fa-lg"></i> PANEL ADMINISTRACYJNY FitGym
                 </a>
             </li>
-            <li data-toggle="collapse" data-target="#products" class="collapsed">
-                <a href="/admin/adminpage/userlist">
-                    <i class="fa fa-gift fa-lg"></i> Zarządzanie użytkownikami FitGym</a>
+            <li data-toggle="collapse" data-target="#adminusermanagement" class="collapsed">
+                <a href="#"><i class="fa fa-globe fa-lg"></i> Zarządzanie użytkownikami FitGym <span
+                        class="arrow"></span></a>
             </li>
+            <ul class="sub-menu collapse" id="adminusermanagement">
+                <li><a href="/admin/adminpage/userlist">Lista użytkowników FitGym</a></li>
+                <li><a href="/admin/adminpage/useradd">Dodanie użytkownika FitGym</a></li>
+            </ul>
             <li>
                 <a href="/admin/adminpage/dbadmin">
                     <i class="fa fa-user fa-lg"></i> Zarządzanie bazą danych</a>
             </li>
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a href="#"><i class="fa fa-globe fa-lg"></i> Pozostałe ustawienia <span class="arrow"></span></a>
-            </li>
-            <ul class="sub-menu collapse" id="service">
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
-            </ul>
-            <li>
-                <a href="/member/memberpage">
-                    <i class="fa fa-users fa-lg"></i> Moje dane
-                </a>
-            </li>
         </ul>
-    </div>
-</div>
 
-<div class="nav-side-menu" th:fragment="managerpanel">
-    <div class="brand">
-        <div class="ratio img-responsive img-circle"
-             style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
-    </div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
-
-    <div class="menu-list">
-        <ul id="menu-content" class="menu-content collapse out">
+        <ul sec:authorize="hasRole('ROLE_MANAGEMENT')" id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/management/managementpage">
                     <i class="fa fa-dashboard fa-lg"></i> PANEL MENEDZERSKI FitGym
@@ -132,7 +134,7 @@
                 </a>
             </li>
             <li data-toggle="collapse" data-target="#personel" class="collapsed">
-                <a href="#"><i class="fa fa-globe fa-lg"></i> Zarządzanie peronelem FitGym<span
+                <a href="#"><i class="fa fa-globe fa-lg"></i> Zarządzanie personelem FitGym<span
                         class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="personel">
@@ -148,24 +150,10 @@
                 <li>Aktualny status obsługi klubu</li>
                 <li>Aktualny stan wspólpracujących instruktorów</li>
             </ul>
-            <li>
-                <a href="/management/managementpage">
-                    <i class="fa fa-users fa-lg"></i> Moje dane
-                </a>
-            </li>
+
         </ul>
-    </div>
-</div>
 
-<div class="nav-side-menu" th:fragment="staffpanel">
-    <div class="brand">
-        <div class="ratio img-responsive img-circle"
-             style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
-    </div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
-
-    <div class="menu-list">
-        <ul id="menu-content" class="menu-content collapse out">
+        <ul sec:authorize="hasRole('ROLE_STAFF')" id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/staff/staffpage">
                     <i class="fa fa-dashboard fa-lg"></i> PANEL OBSLUGI KLUBU
@@ -175,24 +163,9 @@
                 <a href="/staff/staffpage">
                     <i class="fa fa-gift fa-lg"></i>Logowanie użytkowników</a>
             </li>
-            <li>
-                <a href="/staff/staffpage">
-                    <i class="fa fa-users fa-lg"></i> Moje dane
-                </a>
-            </li>
         </ul>
-    </div>
-</div>
 
-<div class="nav-side-menu" th:fragment="instructorpanel">
-    <div class="brand">
-        <div class="ratio img-responsive img-circle"
-             style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
-    </div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
-
-    <div class="menu-list">
-        <ul id="menu-content" class="menu-content collapse out">
+        <ul sec:authorize="hasRole('ROLE_INSTRUCTOR')" id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/instructor/instructorpage">
                     <i class="fa fa-dashboard fa-lg"></i> PANEL INSTRUKTORA
@@ -202,24 +175,9 @@
                 <a href="/instructor/instructorpage">
                     <i class="fa fa-gift fa-lg"></i> Zarządzanie treningami w FitGym</a>
             </li>
-            <li>
-                <a href="/instructor/instructorpage">
-                    <i class="fa fa-users fa-lg"></i> Moje dane
-                </a>
-            </li>
         </ul>
-    </div>
-</div>
 
-<div class="nav-side-menu" th:fragment="memberpanel">
-    <div class="brand">
-        <div class="ratio img-responsive img-circle"
-             style="background-image: url(https://i0.wp.com/digital-photography-school.com/wp-content/uploads/flickr/8260117875_5ab9373bce_o.jpg?resize=600%2C401&ssl=1);"></div>
-    </div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content">dfdf</i>
-
-    <div class="menu-list">
-        <ul id="menu-content" class="menu-content collapse out">
+        <ul sec:authorize="hasRole('ROLE_MEMBER')" id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/member/memberpage">
                     <i class="fa fa-dashboard fa-lg"></i> PANEL UŻYTKOWNIKA
@@ -243,69 +201,50 @@
                 <a href="/member/memberpage"><i class="fa fa-globe fa-lg"></i> Historia płatności <span
                         class="arrow"></span></a>
             </li>
-            <ul class="sub-menu collapse" id="service">
-                <li>New Service 1</li>
-                <li>New Service 2</li>
-                <li>New Service 3</li>
-            </ul>
+        </ul>
+
+        <ul id="menu-content" class="menu-content collapse out">
             <li>
                 <a href="/member/memberpage">
-                    <i class="fa fa-users fa-lg"></i> Moje dane
+                    <i class="fa fa-users fa-lg"></i> Moje dane all
                 </a>
             </li>
         </ul>
     </div>
 </div>
-</div>
 
-<!--####### AREA WYBÓR #######-->
-<div th:fragment="userpage">
-    <div th:replace="fragment/fragments :: navbar"></div>
-    <div class="customrow">
-        <div class="row">
-            <div class="col-md-4">
-                <div sec:authorize="hasRole('ROLE_ADMIN')" th:replace="fragment/fragments :: adminpanel"></div>
-                <div sec:authorize="hasRole('ROLE_MANAGEMENT')" th:replace="fragment/fragments :: managerpanel"></div>
-                <div sec:authorize="hasRole('ROLE_STAFF')" th:replace="fragment/fragments :: staffpanel"></div>
-                <div sec:authorize="hasRole('ROLE_INSTRUCTOR')"
-                     th:replace="fragment/fragments :: instructorpanel"></div>
-                <div sec:authorize="hasRole('ROLE_MEMBER')" th:replace="fragment/fragments :: memberpanel"></div>
-            </div>
-            <div class="col-md-8">
-                <div sec:authorize="hasRole('ROLE_ADMIN')" th:replace="fragment/fragments :: adminarea"></div>
-                <div class="container" th:fragment="userarea">
-                    <div class="container kolorek"><h6
-                            th:text="'Aktualnie zalogowany użytkownik: '+${nazwaUzytkownika}"></h6></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!--####### AREA DETAIL #######-->
-<div class="container" th:fragment="adminarea">
-    <div class="container kolorek">
+<!--####### PANEL #######-->
+<div class="container" th:fragment="allpanel">
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="container">
         <h1>Panel administracyjny Fitgym</h1>
         <hr/>
         <div th:if="${adminareaPanel == true}" th:insert="fragment/fragments :: adminareapanel"></div>
         <div th:if="${adminareaUsers == true}" th:insert="fragment/fragments :: adminareausers"></div>
+        <div th:if="${adminareaUsersAdd == true}" th:insert="fragment/fragments :: adminareauseradd"></div>
         <div th:if="${adminareaDb == true}" th:insert="fragment/fragments :: adminareadb"></div>
     </div>
-</div>
 
-
-<div class="container" th:fragment="managerarea">
-    <div class="container kolorek"><h1 th:if="${uptime != null}" th:text="'Uptime: '+${uptime}"></h1></div>
-    <div class="container kolorek"><h1 th:if="${dateformatted != null}" th:text="'Date: '+${dateformatted}"></h1>
+    <div sec:authorize="hasRole('ROLE_MANAGEMENT')" class="container">
+        <h1>Panel menedżerski Fitgym</h1>
+        <hr/>
     </div>
-    <div class="container kolorek"><h1 th:if="${listauzytkownikow != null}"
-                                       th:text="'Lista: '+${listauzytkownikow}"></h1></div>
-    <div class="container kolorek"><h1 th:if="${zarzadzaniebaza != null}"
-                                       th:text="'Zarzadzanie: '+${zarzadzaniebaza}"></h1></div>
-</div>
 
-<div class="container" th:fragment="userarea">
-    <div class="container kolorek"><h1 th:text="${nazwaUzytkownika}"></h1></div>
+    <div sec:authorize="hasRole('ROLE_STAFF')" class="container">
+        <h1>Panel obsługi Fitgym</h1>
+        <hr/>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_INSTRUCTOR')" class="container">
+        <h1>Panel instruktora Fitgym</h1>
+        <hr/>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_MEMBER')" class="container">
+        <h1>Panel użytkownika Fitgym</h1>
+        <hr/>
+    </div>
+
 </div>
 
 
@@ -364,6 +303,23 @@
     <h3>&nbsp;</h3>
 </div>
 
+<div class="container" th:fragment="adminareauseradd">
+    <h3>Dodawanie uzytkownika</h3>
+    <h3>&nbsp;</h3>
+    <form action="#" th:action="@{/admin/adminpage/useraddaction}" method="post" th:object="${fitgymuser}">
+        <p>Imie<input type="text" id="userimie" th:field="*{userimie}"></p>
+        <p>Nazwisko<input type="text" id="usernazwisko" th:field="*{usernazwisko}"></p>
+        <p>Email<input type="text" id="useremail" th:field="*{useremail}"></p>
+        <p>Fitgymid<input type="text" id="fitgymid" th:field="*{fitgymid}"></p>
+        <p>Password<input type="text" id="password" th:field="*{password}"></p>
+        <p>Adres<input type="text" id="adres" th:field="*{adres}"></p>
+        <p>Enabled<input type="checkbox" id="enabled" th:checked="${fitgymuser.enabled}"></p>
+        <!--<input type="hidden" id="userroleid" th:field="*{userroleid}" value="5">-->
+        <input type="submit" value="Dodaj uzytkownika">
+    </form>
+
+</div>
+
 <div class="container" th:fragment="adminareadb">
     <h3>Informacje o bazie danych</h3>
     <a href="/none">Informacje o bazie danych</a>
@@ -377,6 +333,7 @@
     <a href="/none">DB Dump</a>
     <h3>&nbsp;</h3>
 </div>
+
 
 <div class="container d-flex h-50" th:fragment="initial">
     <div class="row align-self-center w-100">
